@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Branches — Smart Clinic</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="index.html"><i class="fa-solid fa-hospital me-2"></i>Smart Clinic</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="doctors.html">Doctors</a></li>
+        <li class="nav-item"><a class="nav-link active" href="branches.html">Branches</a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="bg-primary text-white py-5">
+  <div class="container">
+    <h1 class="fw-bold display-5 mb-2"><i class="fa-solid fa-hospital me-3"></i>Our Branches</h1>
+    <p class="lead mb-0">10 branches across Mysuru — always close to you.</p>
+  </div>
+</div>
+
+<div class="container py-5">
+  <div class="row g-4" id="branches-grid">
+    <div class="col-12 text-center py-5"><div class="spinner-border text-primary"></div><p class="mt-2 text-muted">Loading branches…</p></div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p class="mb-0 fw-bold"><i class="fa-solid fa-hospital me-2"></i>Smart Clinic — Mysuru &copy; 2026</p>
+    <p class="mb-0 text-warning fw-bold mt-1"><i class="fa-solid fa-phone me-1"></i>Emergency 24/7: +91 98765 43210</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const API = "/api";
+const colors = ["primary","success","info","warning","danger","secondary"];
+
+async function loadBranches() {
+  const grid = document.getElementById("branches-grid");
+  try {
+    const res      = await fetch(`${API}/branches`);
+    const branches = await res.json();
+    if (!branches.length) { grid.innerHTML = "<p class='text-muted text-center'>No branches found.</p>"; return; }
+    grid.innerHTML = branches.map((b, i) => `
+      <div class="col-md-4 col-lg-4">
+        <div class="card branch-card shadow-sm h-100 border-0">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-center mb-3">
+              <div class="rounded-circle bg-${colors[i%colors.length]} d-flex align-items-center justify-content-center me-3" style="width:52px;height:52px;flex-shrink:0">
+                <i class="fa-solid fa-hospital text-white fs-5"></i>
+              </div>
+              <h6 class="fw-bold mb-0">${b.name}</h6>
+            </div>
+            <p class="text-muted small mb-2"><i class="fa-solid fa-location-dot me-2 text-danger"></i>${b.address}, ${b.city}</p>
+            <p class="text-primary small fw-bold mb-3"><i class="fa-solid fa-phone me-2"></i>${b.phone}</p>
+            <div class="d-flex gap-2">
+              <a href="doctors.html" class="btn btn-sm btn-outline-primary flex-fill">View Doctors</a>
+              <a href="https://www.google.com/maps?q=${b.location?.coordinates?.[1]},${b.location?.coordinates?.[0]}" target="_blank" class="btn btn-sm btn-outline-secondary flex-fill">
+                <i class="fa-solid fa-map-location-dot me-1"></i>Map
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>`).join("");
+  } catch(err) {
+    grid.innerHTML = `<p class="text-danger text-center">Error: ${err.message}</p>`;
+  }
+}
+loadBranches();
+</script>
+</body>
+</html>

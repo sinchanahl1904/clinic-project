@@ -1,0 +1,176 @@
+╔══════════════════════════════════════════════════════════════╗
+║           SMART CLINIC — COMPLETE SETUP GUIDE               ║
+╚══════════════════════════════════════════════════════════════╝
+
+STEP 1 — EXTRACT THE ZIP
+─────────────────────────
+Extract the zip file anywhere you want.
+Example: C:\Users\YourName\Desktop\smart-clinic\
+
+STEP 2 — OPEN IN VS CODE
+─────────────────────────
+Right-click the "smart-clinic" folder → "Open with VS Code"
+
+STEP 3 — INSTALL PACKAGES
+─────────────────────────
+Open Terminal in VS Code (Ctrl + ` )
+Run this ONE command:
+
+    npm install
+
+Wait for it to finish. You should see a node_modules folder appear.
+
+STEP 4 — MAKE SURE MONGODB IS RUNNING
+──────────────────────────────────────
+Open MongoDB Compass.
+Click "Connect" (localhost:27017).
+That's all — just make sure it's open.
+
+STEP 5 — SEED THE DATABASE (FIRST TIME ONLY)
+────────────────────────────────────────────
+In VS Code terminal, run:
+
+    node seed.js
+
+You should see:
+  ✅ 10 branches created.
+  ✅ Admin created: admin@clinic.com / admin123
+  ✅ 20 doctors created.
+  🎉 Seeding complete!
+
+STEP 6 — START THE SERVER
+──────────────────────────
+In VS Code terminal, run:
+
+    npm run dev
+
+You should see:
+  ✅ MongoDB Connected
+  🚀 Server running at http://localhost:5000
+
+STEP 7 — OPEN THE WEBSITE
+──────────────────────────
+Open your browser and go to:
+
+    http://localhost:5000
+
+That's your website!
+
+═══════════════════════════════════════════════════
+PAGES AND THEIR LINKS
+═══════════════════════════════════════════════════
+
+  Homepage        → http://localhost:5000
+  Doctors         → http://localhost:5000/doctors.html
+  Branches        → http://localhost:5000/branches.html
+  Register        → http://localhost:5000/register.html
+  Login           → http://localhost:5000/login.html
+
+  Patient Dashboard → http://localhost:5000/dashboard/patient-dashboard.html
+  Doctor Dashboard  → http://localhost:5000/dashboard/doctor-dashboard.html
+  Admin Dashboard   → http://localhost:5000/dashboard/admin.html
+
+═══════════════════════════════════════════════════
+LOGIN CREDENTIALS (after running seed.js)
+═══════════════════════════════════════════════════
+
+  ADMIN:
+    Email:    admin@clinic.com
+    Password: admin123
+
+  DOCTOR (any of 20 doctors):
+    Email:    dr1@clinic.com   (or dr2, dr3, ... dr20)
+    Password: doctor123
+
+  PATIENT:
+    Register a new account on the Register page.
+
+═══════════════════════════════════════════════════
+WHAT EACH ROLE CAN DO
+═══════════════════════════════════════════════════
+
+  PATIENT:
+    ✅ Register / Login
+    ✅ Browse doctors & filter by specialization
+    ✅ Book appointments (choose doctor, branch, time, reason)
+    ✅ View all their appointments
+    ✅ Cancel pending appointments
+    ✅ View profile
+
+  DOCTOR:
+    ✅ Login
+    ✅ See pending appointments from patients
+    ✅ Accept or Reject appointments
+    ✅ Mark accepted appointments as completed
+    ✅ View profile (specialization, branch, etc.)
+
+  ADMIN:
+    ✅ Login
+    ✅ See stats (users, doctors, appointments, branches)
+    ✅ Add new doctors (with email/password)
+    ✅ Delete doctors
+    ✅ View all appointments
+    ✅ View all users & delete them
+    ✅ Add new branches
+    ✅ Delete branches
+
+═══════════════════════════════════════════════════
+IF SOMETHING GOES WRONG
+═══════════════════════════════════════════════════
+
+  Problem: "Cannot connect to server"
+  Fix: Make sure you ran "npm run dev" and it shows "MongoDB Connected"
+
+  Problem: Server starts but MongoDB not connected
+  Fix: Open MongoDB Compass and connect to localhost:27017
+
+  Problem: Login says "Invalid email or password"
+  Fix: Run "node seed.js" first to create test users
+
+  Problem: Port 5000 already in use
+  Fix: Change PORT=5000 to PORT=3000 in .env file,
+       then open http://localhost:3000 instead
+
+═══════════════════════════════════════════════════
+PROJECT FOLDER STRUCTURE
+═══════════════════════════════════════════════════
+
+smart-clinic/
+├── server.js                  ← Main server file
+├── seed.js                    ← Database seeder
+├── package.json               ← Dependencies
+├── .env                       ← Environment variables
+├── backend/
+│   ├── models/
+│   │   ├── User.js            ← User schema
+│   │   ├── Doctor.js          ← Doctor schema
+│   │   ├── Branch.js          ← Branch schema
+│   │   └── Appointment.js     ← Appointment schema
+│   ├── controllers/
+│   │   ├── authController.js  ← Register / Login logic
+│   │   ├── doctorController.js
+│   │   ├── branchController.js
+│   │   ├── appointmentController.js
+│   │   └── adminController.js
+│   ├── middleware/
+│   │   ├── auth.js            ← JWT token check
+│   │   └── roles.js           ← Role check (admin/doctor/patient)
+│   └── routes/
+│       ├── authRoutes.js
+│       ├── doctorRoutes.js
+│       ├── branchRoutes.js
+│       ├── appointmentRoutes.js
+│       └── adminRoutes.js
+└── frontend/
+    ├── index.html             ← Homepage
+    ├── doctors.html           ← Doctor listing + booking
+    ├── branches.html          ← Branch listing
+    ├── login.html             ← Login page
+    ├── register.html          ← Register page
+    ├── style.css              ← Shared styles
+    └── dashboard/
+        ├── patient-dashboard.html
+        ├── doctor-dashboard.html
+        └── admin.html
+
+═══════════════════════════════════════════════════

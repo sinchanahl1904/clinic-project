@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Clinic — Mysuru</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ── Navbar ─────────────────────────────────────────── -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="index.html">
+      <i class="fa-solid fa-hospital me-2"></i>Smart healthcare assistant
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="doctors.html">Doctors</a></li>
+        <li class="nav-item"><a class="nav-link" href="branches.html">Branches</a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html" id="nav-login">Login</a></li>
+        <li class="nav-item"><a class="btn btn-light btn-sm ms-2 fw-bold text-primary" href="register.html" id="nav-register">Register</a></li>
+        <li class="nav-item d-none" id="nav-user-info">
+          <span class="navbar-text text-white me-3">Hi, <strong id="nav-username"></strong></span>
+          <a class="btn btn-outline-light btn-sm" href="#" id="nav-dashboard">Dashboard</a>
+          <button class="btn btn-danger btn-sm ms-2" onclick="logout()">Logout</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────────── -->
+<div class="hero">
+  <div id="heroSlider" class="carousel slide carousel-fade h-100" data-bs-ride="carousel" data-bs-interval="5000">
+    <div class="carousel-inner h-100">
+      <div class="carousel-item active h-100">
+        <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1400&q=80" class="hero-slider-img" alt="">
+      </div>
+      <div class="carousel-item h-100">
+        <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1400&q=80" class="hero-slider-img" alt="">
+      </div>
+      <div class="carousel-item h-100">
+        <img src="https://images.unsplash.com/photo-1504813184591-01572f98c85f?auto=format&fit=crop&w=1400&q=80" class="hero-slider-img" alt="">
+      </div>
+    </div>
+  </div>
+  <div class="hero-overlay">
+    <h1 class="display-4 fw-bold text-white mb-3"><span id="typewriter" class="typewriter-text"></span></h1>
+    <p class="lead text-white mb-4">Book appointments with top specialists in Mysuru — fast, easy & trusted.</p>
+    <div class="d-flex gap-3 flex-wrap justify-content-center">
+      <a href="doctors.html" class="btn btn-success btn-lg px-4 fw-bold shadow">
+        <i class="fa-solid fa-calendar-plus me-2"></i>Book Appointment
+      </a>
+      <a href="register.html" class="btn btn-outline-light btn-lg px-4 fw-bold">
+        <i class="fa-solid fa-user-plus me-2"></i>Register Free
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ── Search Bar ──────────────────────────────────────── -->
+<div class="bg-white shadow-sm py-4">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="input-group input-group-lg">
+          <span class="input-group-text bg-white"><i class="fa-solid fa-magnifying-glass text-primary"></i></span>
+          <input type="text" id="searchInput" class="form-control border-start-0 border-end-0"
+                 placeholder="Search doctors by name or specialization (e.g. Cardiology)...">
+          <button class="btn btn-primary px-4 fw-bold" onclick="searchDoctors()">Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Stats Bar ───────────────────────────────────────── -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="row text-center g-4">
+      <div class="col-6 col-md-3">
+        <h2 id="stat-patients">5,000+</h2>
+        <p class="mb-0 text-white-50 fw-bold text-uppercase small">Patients Served</p>
+      </div>
+      <div class="col-6 col-md-3">
+        <h2 id="stat-doctors">0</h2>
+        <p class="mb-0 text-white-50 fw-bold text-uppercase small">Expert Doctors</p>
+      </div>
+      <div class="col-6 col-md-3">
+        <h2 id="stat-branches">0</h2>
+        <p class="mb-0 text-white-50 fw-bold text-uppercase small">Branches in Mysuru</p>
+      </div>
+      <div class="col-6 col-md-3">
+        <h2>10+</h2>
+        <p class="mb-0 text-white-50 fw-bold text-uppercase small">Specializations</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Why Choose Us ───────────────────────────────────── -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="section-title text-center mb-5">Why Choose <span class="text-primary">Smart Clinic?</span></h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm text-center p-4">
+          <div class="mb-3"><i class="fa-solid fa-calendar-check fa-3x text-primary"></i></div>
+          <h5 class="fw-bold">Easy Booking</h5>
+          <p class="text-muted">Book your appointment in under 60 seconds, anytime from anywhere.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm text-center p-4">
+          <div class="mb-3"><i class="fa-solid fa-user-doctor fa-3x text-success"></i></div>
+          <h5 class="fw-bold">Expert Doctors</h5>
+          <p class="text-muted">20+ board-certified specialists across all major medical fields.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm text-center p-4">
+          <div class="mb-3"><i class="fa-solid fa-shield-heart fa-3x text-info"></i></div>
+          <h5 class="fw-bold">Secure & Private</h5>
+          <p class="text-muted">Your health data is fully encrypted and never shared.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AI Health Assistant ────────────────────────────────── -->
+<section class="py-5 bg-light" id="ai-assistant-section">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-title">AI Health <span class="text-primary">Assistant</span></h2>
+      <p class="text-muted">Instant answers for general health queries, medicines, and red flags.</p>
+    </div>
+    
+    <div class="ai-container">
+      <div class="ai-header">
+        <i class="fa-solid fa-robot fa-lg"></i>
+        <span class="fw-bold">Smart Clinic AI Assistant</span>
+        <span class="ms-auto badge bg-success border-0">Online</span>
+      </div>
+      <div class="ai-messages" id="ai-messages">
+        <div class="message message-ai">
+          Hello! I'm your AI Health Assistant. How can I help you today? You can ask me about general health issues, medicines, or health red flags.
+        </div>
+      </div>
+      <div class="ai-input-area">
+        <input type="text" id="ai-input" class="ai-input" placeholder="Type your health query here...">
+        <button class="ai-send-btn" id="ai-send-btn">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Branches ────────────────────────────────────────── -->
+<section class="py-5">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="section-title mb-0">Our <span class="text-primary">Branches</span></h2>
+      <a href="branches.html" class="btn btn-outline-primary rounded-pill">View All <i class="fa-solid fa-arrow-right ms-1"></i></a>
+    </div>
+    <div class="row g-4" id="featured-branches">
+      <div class="col-12 text-center py-3"><div class="spinner-border text-primary"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ──────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <p class="mb-1 fw-bold fs-5"><i class="fa-solid fa-hospital me-2"></i>Smart Clinic — Mysuru</p>
+    <p class="mb-2 text-white-50">Quality healthcare at your fingertips.</p>
+    <p class="mb-0 text-warning fw-bold"><i class="fa-solid fa-phone me-2"></i>Emergency 24/7: +91 98765 43210</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const API = "/api";
+
+// ── Auth helpers ────────────────────────────────────────
+function getUser()  { try { return JSON.parse(localStorage.getItem("user")); } catch { return null; } }
+function getToken() { return localStorage.getItem("token"); }
+function logout()   { localStorage.clear(); window.location.href = "login.html"; }
+
+function updateNav() {
+  const user = getUser();
+  if (user) {
+    document.getElementById("nav-login").closest("li").classList.add("d-none");
+    document.getElementById("nav-register").closest("li").classList.add("d-none");
+    document.getElementById("nav-user-info").classList.remove("d-none");
+    document.getElementById("nav-username").textContent = user.name.split(" ")[0];
+    const dash = document.getElementById("nav-dashboard");
+    if (user.role === "admin")   dash.href = "dashboard/admin.html";
+    else if (user.role === "doctor") dash.href = "dashboard/doctor-dashboard.html";
+    else dash.href = "dashboard/patient-dashboard.html";
+  }
+}
+
+function searchDoctors() {
+  const q = document.getElementById("searchInput").value.trim();
+  if (q) window.location.href = `doctors.html?search=${encodeURIComponent(q)}`;
+}
+document.getElementById("searchInput").addEventListener("keydown", e => { if (e.key === "Enter") searchDoctors(); });
+
+// ── Load stats ──────────────────────────────────────────
+async function loadStats() {
+  try {
+    const [dRes, bRes] = await Promise.all([fetch(`${API}/doctors/count`), fetch(`${API}/branches/count`)]);
+    const d = await dRes.json(); const b = await bRes.json();
+    document.getElementById("stat-doctors").textContent  = d.count || 0;
+    document.getElementById("stat-branches").textContent = b.count || 0;
+  } catch {}
+}
+
+// ── Load featured doctors (first 6) ────────────────────
+async function loadFeaturedDoctors() {
+  const el = document.getElementById("featured-doctors");
+  try {
+    const res = await fetch(`${API}/doctors`);
+    const doctors = await res.json();
+    if (!doctors.length) { el.innerHTML = "<p class='text-center text-muted'>No doctors found.</p>"; return; }
+    el.innerHTML = doctors.slice(0, 6).map(d => `
+      <div class="col-md-4">
+        <div class="card doctor-card shadow-sm h-100">
+          <img src="${d.image}" class="card-img-top" style="height:200px;object-fit:cover" alt="${d.user?.name}">
+          <div class="card-body">
+            <h6 class="fw-bold mb-1">${d.user?.name || "Doctor"}</h6>
+            <p class="text-primary small fw-bold mb-1">${d.specialization}</p>
+            <p class="text-muted small mb-2"><i class="fa-solid fa-clock me-1"></i>${d.experience} yrs experience</p>
+            <a href="doctors.html" class="btn btn-primary btn-sm w-100">Book Appointment</a>
+          </div>
+        </div>
+      </div>`).join("");
+  } catch { el.innerHTML = "<p class='text-center text-danger'>Could not load doctors.</p>"; }
+}
+
+// ── Load featured branches (first 3) ───────────────────
+async function loadFeaturedBranches() {
+  const el = document.getElementById("featured-branches");
+  try {
+    const res = await fetch(`${API}/branches`);
+    const branches = await res.json();
+    el.innerHTML = branches.slice(0, 3).map(b => `
+      <div class="col-md-4">
+        <div class="card branch-card shadow-sm p-3 h-100">
+          <div class="d-flex align-items-center mb-2">
+            <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width:48px;height:48px;flex-shrink:0">
+              <i class="fa-solid fa-hospital text-white"></i>
+            </div>
+            <h6 class="fw-bold mb-0">${b.name}</h6>
+          </div>
+          <p class="text-muted small mb-1"><i class="fa-solid fa-location-dot me-1 text-danger"></i>${b.address}</p>
+          <p class="text-primary small fw-bold mb-0"><i class="fa-solid fa-phone me-1"></i>${b.phone}</p>
+        </div>
+      </div>`).join("");
+  } catch {}
+}
+
+// ── Typewriter Animation ──────────────────────────────
+const typewriterElement = document.getElementById("typewriter");
+const words = ["Your Health, Our Priority", "Expert Doctors, Trusted Care", "Fast & Easy Appointments", "Healthcare at Your Fingertips"];
+let wordIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+
+function type() {
+  const currentWord = words[wordIndex];
+  if (isDeleting) {
+    typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
+    charIndex--;
+  } else {
+    typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
+    charIndex++;
+  }
+
+  let typeSpeed = isDeleting ? 50 : 100;
+
+  if (!isDeleting && charIndex === currentWord.length) {
+    typeSpeed = 2000;
+    isDeleting = true;
+  } else if (isDeleting && charIndex === 0) {
+    isDeleting = false;
+    wordIndex = (wordIndex + 1) % words.length;
+    typeSpeed = 500;
+  }
+
+  setTimeout(type, typeSpeed);
+}
+
+// ── AI Assistant Logic ──────────────────────────────────
+const aiMessages = document.getElementById("ai-messages");
+const aiInput = document.getElementById("ai-input");
+const aiSendBtn = document.getElementById("ai-send-btn");
+
+async function handleAIQuery() {
+  const query = aiInput.value.trim();
+  if (!query) return;
+
+  // Add user message
+  appendMessage(query, "user");
+  aiInput.value = "";
+
+  // Add typing indicator
+  const typingId = "typing-" + Date.now();
+  const typingDiv = document.createElement("div");
+  typingDiv.id = typingId;
+  typingDiv.className = "typing-indicator px-3 mb-3";
+  typingDiv.textContent = "AI is thinking...";
+  aiMessages.appendChild(typingDiv);
+  aiMessages.scrollTop = aiMessages.scrollHeight;
+
+  // Simulate AI response (since we don't have a real GPT API key here)
+  setTimeout(() => {
+    aiMessages.removeChild(typingDiv);
+    const response = getSimulatedAIResponse(query);
+    appendMessage(response, "ai");
+  }, 1500);
+}
+
+function appendMessage(text, sender) {
+  const div = document.createElement("div");
+  div.className = `message message-${sender}`;
+  // Handle newlines by converting them to <br>
+  div.innerHTML = text.replace(/\n/g, '<br>');
+  aiMessages.appendChild(div);
+  aiMessages.scrollTop = aiMessages.scrollHeight;
+}
+
+function getSimulatedAIResponse(query) {
+  const q = query.toLowerCase();
+
+  // ── Greetings ──────────────────────────────────────────
+  if (q === "hi" || q === "hello" || q === "hey") {
+    return "Hello! I am your Smart Clinic AI Assistant. I can help you with information on common infections, symptoms, chronic conditions, and general health issues. How can I assist you today?";
+  }
+  if (q.includes("good morning")) return "Good morning! I hope you're having a healthy start to your day. How can I help you with your health concerns?";
+  if (q.includes("good afternoon")) return "Good afternoon! How can I assist you with your health today?";
+  if (q.includes("good evening")) return "Good evening! How can I help you before the day ends?";
+  if (q.includes("thank")) return "You're very welcome! If you have more questions or if your symptoms persist, don't hesitate to book an appointment with our specialists.";
+
+  // ── 1. Common Infections (Communicable) ────────────────
+  if (q.includes("cold") || q.includes("flu") || q.includes("influenza") || q.includes("covid")) {
+    return "RESPIRATORY INFECTIONS:\n• Symptoms: Runny nose, sore throat, cough, fever, and fatigue.\n• OTC Medicines: Paracetamol (for fever), Decongestants (like Phenylephrine), or Cough Suppressants.\n• Advice: Rest and stay hydrated. If breathing is difficult, seek emergency care.";
+  }
+  if (q.includes("stomach") || q.includes("food poisoning") || q.includes("diarrhea")) {
+    return "GASTROINTESTINAL ISSUES:\n• Symptoms: Nausea, vomiting, abdominal cramps, and diarrhea.\n• OTC Medicines: ORS (Oral Rehydration Salts) is critical. Loperamide for diarrhea (adults only).\n• Advice: Stick to a bland diet (BRAT) and watch for dehydration.";
+  }
+  if (q.includes("malaria") || q.includes("dengue")) {
+    return "VECTOR-BORNE INFECTIONS:\n• Symptoms: High fever, severe headache, joint/muscle pain, and rashes.\n• Warning: These require medical testing. Do NOT take Aspirin/Ibuprofen for suspected Dengue. Use Paracetamol only and consult a doctor immediately.";
+  }
+  if (q.includes("skin") || q.includes("fungal") || q.includes("ringworm")) {
+    return "SKIN INFECTIONS:\n• Symptoms: Itching, redness, circular rashes, or scaling.\n• OTC Medicines: Antifungal creams (Clotrimazole or Terbinafine).\n• Advice: Keep the area clean and dry. Avoid sharing personal items like towels.";
+  }
+
+  // ── 2. Common Symptoms & Acute Ailments ────────────────
+  if (q.includes("headache") || q.includes("migraine")) {
+    return "HEADACHE/MIGRAINE:\n• Symptoms: Throbbing pain, sensitivity to light/sound, or dull pressure.\n• OTC Medicines: Ibuprofen, Naproxen, or Paracetamol.\n• Advice: Rest in a dark, quiet room. If it's the 'worst headache of your life,' call emergency services.";
+  }
+  if (q.includes("fever")) {
+    return "FEVER (PYREXIA):\n• Symptoms: Body temperature above 100.4°F (38°C), chills, and sweating.\n• OTC Medicines: Paracetamol (Acetaminophen) or Ibuprofen.\n• Advice: Drink plenty of fluids. Seek help if fever exceeds 103°F or lasts >3 days.";
+  }
+  if (q.includes("sore throat")) {
+    return "SORE THROAT:\n• Symptoms: Pain while swallowing, dry/scratchy throat.\n• OTC Medicines: Throat lozenges, Saltwater gargles, or Paracetamol.\n• Advice: Stay hydrated with warm liquids.";
+  }
+
+  // ── 3. Chronic Conditions (Non-Communicable) ───────────
+  if (q.includes("blood pressure") || q.includes("hypertension")) {
+    return "HYPERTENSION (High BP):\n• Symptoms: Often none (The Silent Killer), but can cause headaches or shortness of breath.\n• Management: Low salt diet, regular exercise. Prescribed medication is usually required.\n• Advice: Monitor your BP regularly at our clinic.";
+  }
+  if (q.includes("diabetes") || q.includes("sugar")) {
+    return "DIABETES:\n• Symptoms: Increased thirst, frequent urination, blurred vision, and fatigue.\n• Management: Diet control, regular monitoring, and prescribed Insulin or Metformin.\n• Advice: Consult our Endocrinologist for a personalized plan.";
+  }
+  if (q.includes("asthma") || q.includes("breathing")) {
+    return "ASTHMA/COPD:\n• Symptoms: Wheezing, shortness of breath, and chest tightness.\n• OTC/Management: Salbutamol inhalers (if prescribed). Avoid triggers like dust/smoke.\n• Red Flag: If you can't finish a sentence due to breathlessness, seek emergency care.";
+  }
+  if (q.includes("arthritis") || q.includes("joint pain")) {
+    return "ARTHRITIS:\n• Symptoms: Joint pain, stiffness (especially in the morning), and swelling.\n• OTC Medicines: Topical Diclofenac gel or Ibuprofen.\n• Advice: Low-impact exercise (swimming/walking) helps maintain flexibility.";
+  }
+
+  // ── 4. Body System Issues ─────────────────────────────
+  if (q.includes("acne") || q.includes("pimple")) {
+    return "ACNE:\n• Symptoms: Blackheads, whiteheads, or painful red bumps.\n• OTC Medicines: Benzoyl Peroxide or Salicylic Acid washes.\n• Advice: Do not squeeze pimples as it leads to scarring.";
+  }
+  if (q.includes("acid") || q.includes("heartburn") || q.includes("indigestion")) {
+    return "HEARTBURN/ACIDITY:\n• Symptoms: Burning sensation in chest, sour taste in mouth.\n• OTC Medicines: Antacids (Mylanta/Tums) or Omeprazole.\n• Advice: Avoid spicy foods and lying down immediately after meals.";
+  }
+
+  // ── Red Flags ──────────────────────────────────────────
+  if (q.includes("red flag") || q.includes("emergency") || q.includes("danger") || q.includes("chest pain") || q.includes("difficulty breathing")) {
+    return "🚨 EMERGENCY RED FLAGS:\n• Sudden chest pain (possible heart attack)\n• Difficulty breathing\n• Sudden weakness/numbness (possible stroke)\n• Severe bleeding\nIf you have these, call +91 98765 43210 IMMEDIATELY.";
+  }
+
+  return "I understand you're asking about '" + query + "'. While I can provide general health info, it's best to consult our specialists for a proper diagnosis. Would you like me to help you find a doctor for this?";
+}
+
+aiSendBtn.addEventListener("click", handleAIQuery);
+aiInput.addEventListener("keydown", e => { if (e.key === "Enter") handleAIQuery(); });
+
+type();
+updateNav();
+loadStats();
+// loadFeaturedDoctors(); // Removed as section is replaced
+loadFeaturedBranches();
+</script>
+</body>
+</html>
